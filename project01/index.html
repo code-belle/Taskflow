@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaskFlow – To-Do List</title>
+  <meta name="description" content="A simple and clean to-do list app to manage your daily tasks." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">✦ TaskFlow</div>
+      <p class="date-display" id="dateDisplay"></p>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="stat-num" id="totalCount">0</span>
+        <span class="stat-lbl">Total</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="pendingCount">0</span>
+        <span class="stat-lbl">Pending</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num" id="doneCount">0</span>
+        <span class="stat-lbl">Completed</span>
+      </div>
+    </div>
+
+    <!-- Add Task Form -->
+    <div class="add-form">
+      <input type="text" id="taskInput" class="task-input" placeholder="Add a new task..." />
+      <select id="prioritySelect" class="priority-select">
+        <option value="Low">Low</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="High">High</option>
+      </select>
+      <input type="date" id="dueDate" class="due-input" />
+      <button class="add-btn" id="addBtn" onclick="addTask()">+ Add</button>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="tab active" id="tab-all"       onclick="setFilter('all')">All</button>
+      <button class="tab"        id="tab-pending"   onclick="setFilter('pending')">Pending</button>
+      <button class="tab"        id="tab-completed" onclick="setFilter('completed')">Completed</button>
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search..." oninput="renderTasks()" />
+    </div>
+
+    <!-- Task List -->
+    <ul class="task-list" id="taskList"></ul>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">📭</div>
+      <p>No tasks here. Add one above!</p>
+    </div>
+
+    <!-- Clear Completed -->
+    <div class="footer-actions">
+      <button class="clear-btn" onclick="clearCompleted()">🗑 Clear Completed</button>
+    </div>
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="overlay" id="overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 class="modal-title">✏️ Edit Task</h2>
+      <input type="text" id="editInput" class="task-input" placeholder="Task title..." />
+      <select id="editPriority" class="priority-select" style="width:100%;margin-top:.75rem;">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <input type="date" id="editDue" class="due-input" style="width:100%;margin-top:.75rem;" />
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save"   onclick="saveEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
